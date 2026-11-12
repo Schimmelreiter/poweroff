@@ -1,0 +1,950 @@
+<HTML>
+<body>
+<h1 style="line-height: 100%">Poweroff 3.0</h1>
+<p style="line-height: 100%">A free shutdown utility<br>
+Created by Jorgen Bosman<br>
+Made in Belgium<br>
+</p>
+<h1 style="line-height: 100%">1 Introduction</h1>
+<p style="line-height: 100%"><br>
+Poweroff is a small program that allows you to control the power state of your
+pc.<br>
+<br>
+It can power off, shutdown or reboot your pc, log you off, lock your
+workstation, go to&nbsp;standby or hibernation mode and even wake up another pc.<br>
+<br>
+All actions can be done locally or on a remote pc (if they are running
+poweroff).<br>
+<br>
+The action can be performed immediately or scheduled, by using a built-in
+scheduler.<br>
+<br>
+All actions and options can be controlled by command line options. This way, you&nbsp;can
+easily integrate poweroff in your batch files.<br>
+<br>
+It should run on Windows 95/98/Me/NT4.0/2000/XP, each with its own limitations.&nbsp;Beware
+that I haven’t tested the program on these operating systems, but in theory it&nbsp;should
+work on all of them…<br>
+<br>
+Since this release has been completely rewritten from scratch, it may be
+possible that&nbsp;it still contains some bugs. Please let me know if you find
+one.<br>
+<br>
+Full source code is included!<br>
+</p>
+<h1 style="line-height: 100%">2 Installation</h1>
+<p style="line-height: 100%">Installation is very easy, just extract the
+poweroff.exe file somewhere where you can&nbsp;find it and double-click the
+executable. You do not need any of the other files in the&nbsp;zip file, unless
+you are interested in the source code.<br>
+<br>
+To uninstall, simply delete the poweroff.exe file. Poweroff stores its settings
+in the&nbsp;registry, so you should remove them also, either by selecting
+‘Remove settings’ from&nbsp;the file menu or by manually removing them from
+the registry using ‘regedit.exe’&nbsp;<br>
+(WARNING: using regedit can damage your Windows configuration, so be careful&nbsp;what
+you do!). The key that you can safely delete is&nbsp;<br>
+<br>
+HKEY_CURRENT_USER\SOFTWARE\Poweroff<br>
+<br>
+When poweroff starts up, it first looks for settings in HKEY_CURRENT_USER. If it&nbsp;cannot
+find any, then it looks in HKEY_LOCAL_MACHINE. This way you can define&nbsp;global
+settings and per user settings. You will have to create the global settings&nbsp;manually.<br>
+<br>
+To delete the poweroff service, choose ‘Remove service’ from the service
+menu. The&nbsp;settings are automatically removed. To manually remove the
+service settings, delete&nbsp;the registry key<br>
+<br>
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Poweroff\Parameters<br>
+<br>
+Other registry keys that may be lying around then the service is removed are:</p>
+<p style="line-height: 100%">HKEY_LOCAL_MACHINE
+\System\ControlSet00x\Services\PowerOff&nbsp;<br>
+HKEY_LOCAL_MACHINE \System\ControlSet00x\Enum\Root\LEGACY_POWEROFF</p>
+<p style="line-height: 100%">These should disappear when your computer is
+rebooted. They can be safely deleted&nbsp;when the service is removed.<br>
+<br>
+You need Internet Explorer 4.0 or higher because it uses some common controls
+that&nbsp;are shipped with IE.<br>
+</p>
+<h1 style="line-height: 100%">3 Usage</h1>
+<h2 style="line-height: 100%">3.1 Starting</h2>
+<p style="line-height: 100%">When you double-click the poweroff executable, the
+main window is shown. Here you&nbsp;can select which action to perform and
+select the appropriate options. To execute the&nbsp;desired action, simply hit
+the ‘Do it’ button.</p>
+<p style="line-height: 100%"><img border="0" src="Image1.gif" width="363" height="422"></p>
+<p style="line-height: 100%">Figure 1
+<h2 style="line-height: 100%">3.2 Actions</h2>
+<p style="line-height: 100%">Poweroff supports the following actions:</p>
+<h3 style="line-height: 100%">3.2.1 Logoff</h3>
+<p style="line-height: 100%">Logs off the current logged on user.</p>
+<h3 style="line-height: 100%">3.2.2 Reboot</h3>
+<p style="line-height: 100%">Reboots the computer.</p>
+<h3 style="line-height: 100%">3.2.3 Shutdown</h3>
+<p style="line-height: 100%">Shutdown the computer.&nbsp;<br>
+In NT/2000/XP this will display the standard message ‘It is safe to shutdown
+you&nbsp;computer’.&nbsp;<br>
+In Win9x/Me this will poweroff your pc if your hardware supports it</p>
+<h3 style="line-height: 100%">3.2.4 Poweroff</h3>
+<p style="line-height: 100%">This action will physically power off your
+computer. Your hardware must support this, for example an ATX motherboard and
+power&nbsp;supply should support it, but an old AT motherboard probably
+doesn’t support it. You also have to have ACPI or APM enabled in your bios.
+And the power options&nbsp;must be correctly configured in the Windows control
+panel. If Windows performs a&nbsp;poweroff when you do a normal Windows shutdown
+from the start menu, then it will&nbsp;also work with this program.<br>
+<br>
+To enable poweroff in Windows NT, you will need a hal.dll that is capable of
+shutting&nbsp;down your workstation.&nbsp;You can try one that's supplied with
+service pack 4 (or higher): hal.dll.softex<br>
+Just extract the service pack (with the /x option),<br>
+<br>
+There are several machine-specific HAL.DLL’s, and you MUST extract the
+matching&nbsp;HAL*.DLL.SOFTEX from the service pack. To avoid problems when
+someone&nbsp;overwrites the good HAL.DLL with a bad one it's better to rename&nbsp;HAL*.DLL.SOFTEX
+to %SystemRoot%\System32\HALPOWER.DLL for instance,&nbsp;copy the line in
+%SystemDrive%\BOOT.INI which loads the current system, alter the&nbsp;description
+and append &quot; /HAL=HALPOWER.DLL&quot;. Now one can choose between&nbsp;the
+two HALs and has a fallback if the new one fails.</p>
+<p style="line-height: 100%">If you like NT to automatically poweroff at
+shutdown, set the following registry key to&nbsp;1:
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows
+NT\CurrentVersion\Winlogon\PowerdownAfterShutdown</p>
+<h3 style="line-height: 100%">3.2.5 Standby</h3>
+<p style="line-height: 100%">If your pc supports it, then this will put your pc
+into standby mode (sleep mode). If you get a strange error message, then
+probably one of your device drivers doesn’t&nbsp;support standby. Standby is
+not supported on NT.</p>
+<h3 style="line-height: 100%">3.2.6 Hibernate</h3>
+<p style="line-height: 100%">If your pc supports it, then this will put your pc
+into hibernate mode. If you get a strange error message, then probably one of
+your device drivers doesn’t&nbsp;support hibernate. You also have to have
+hibernation enabled in your power settings&nbsp;of the Windows control panel
+(Windows 2000 or above). Hibernate is not supported on Windows 95 or NT.</p>
+<h3 style="line-height: 100%">3.2.7 Lock</h3>
+<p style="line-height: 100%">This action will lock your workstation. This is
+only supported on Windows 2000 or&nbsp;above.</p>
+<h3 style="line-height: 100%">3.2.8 Wake-On-LAN</h3>
+<p style="line-height: 100%">This action allows you to start up a remote pc.
+This remote pc must support Wake-On-LAN. This means that you have to have a
+network card that is connected via an&nbsp;extra wire to the motherboard (or
+power supply) to provide some power. In the&nbsp;system BIOS, Wake-On-LAN must
+also be enabled.<br>
+<br>
+How it works:<br>
+The network card constantly monitors the network for a ‘Magic Packet’ when
+the&nbsp;computer is switched off. This magic packet is a series of bytes that
+is sent over the&nbsp;network.&nbsp;A magic packet consists of a header (6*0xFF)
+and the MAC address of the network&nbsp;adapter repeated several times (16
+times), for example if your MAC address is&nbsp;01:02:03:04:05:06 (6 bytes),
+then the magic packet looks like this:<br>
+FFFFFFFFFFFF010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506010203040506<br>
+<br>
+The nework adapter recognizes the sequence and triggers the power supply to turn&nbsp;on
+the computer.</p>
+<h3 style="line-height: 100%">3.2.7 Turn off monitor</h3>
+<p style="line-height: 100%">This action will put monitor in standby
+(powersaving) mode. You need a monitor that is capable of this feature.</p>
+<h3 style="line-height: 100%">3.2.7 Turn on monitor</h3>
+<p style="line-height: 100%">This action will turn on power to your monitor (get
+it out of stanby/powersaving mode). You need a monitor that is capable of this
+feature.</p>
+<h3 style="line-height: 100%">3.2.7 No action</h3>
+<p style="line-height: 100%">Performs no action on the pc. Useful for only
+giving a warning message or running a program.</p>
+<h2 style="line-height: 100%">3.3 Where to do the action</h2>
+<h3 style="line-height: 100%">3.3.1 Local Computer</h3>
+<p style="line-height: 100%">When this radio button is selected, then the action
+is performed on the local&nbsp;computer. This radio button is unavailable when
+the action is Wake-On-LAN. This is&nbsp;because there’s no way that you can
+turn on your own computer...</p>
+<h3 style="line-height: 100%">3.3.2 Remote Computer</h3>
+<p style="line-height: 100%">When this radio button is selected, then the action
+is performed on a remote&nbsp;computer. You have to click the ‘Specify’
+button to specify on which remote computer&nbsp;to perform the action.</p>
+<p style="line-height: 100%">When the action is anything else than Wake-On-LAN,
+you are presented with the&nbsp;following dialog box:<br>
+<img border="0" src="Image2.gif" width="353" height="279"></p>
+<p style="line-height: 100%">Figure 2</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Computer name:&nbsp;This is the name (or ip
+    address) of the remote computer<br>
+  </li>
+  <li>
+    <p style="line-height: 100%">Use NT protocol:&nbsp;When you select this,
+    then the standard NT protocol/authentication is used to&nbsp;reboot or
+    shutdown the remote computer. These are the only two options&nbsp;supported
+    in this mode!<br>
+  </li>
+</ul>
+<blockquote>
+  <p style="line-height: 100%"><img border="0" src="Image3.gif" width="353" height="279"></p>
+  <p style="line-height: 100%">Figure 3<br>
+  You have to specify whether you want to use the credentials of the user that&nbsp;you
+  used to log into Windows. In that case, you don’t have to supply a&nbsp;username
+  and password.<br>
+  <br>
+  If your current account is not allowed to shutdown the remote machine, then&nbsp;you
+  can specify another username and password to connect to the remote&nbsp;machine
+  that has the rights to shutdown the machine. This username can be a&nbsp;username
+  of your current domain, then you only need to specify the username&nbsp;and
+  password. If the user is from a different domain or the remote computer’s&nbsp;local
+  domain, then you have to prefix the username with the domain name&nbsp;(e.g.:
+  DOMAIN\Username), see figure 3.<br>
+  Note that if you currently have a drive mapping or printer mapping to the&nbsp;remote
+  machine, you cannot specify another username, this is an NT&nbsp;restriction.<br>
+  <br>
+  This mode is only supported from and to NT/2000 computers. No Windows&nbsp;9x/Me
+  support!<br>
+  <br>
+  When you do not select the 'use nt protocol' checkbox, then poweroff must be
+  running on the remote&nbsp;machine, either as a service or interactive with
+  the ‘Allow remote’ option&nbsp;enabled.<br>
+  When that is the case, then all actions are possible on the remote machine&nbsp;and
+  it doesn’t matter which version of Windows is running there. Of course,&nbsp;you
+  can still only perform actions that the remote OS supports…</p>
+</blockquote>
+<ul>
+  <li>
+    <p style="line-height: 100%">Password: Here you can specify the password
+    that gives you access to the remote&nbsp;machine, leave blank if no password
+    was specified by the remote poweroff&nbsp;program.</li>
+  <li>
+    <p style="line-height: 100%">Port number: Here you can specify the port
+    number where the remote poweroff program is&nbsp;listening to</li>
+  <li>
+    <p style="line-height: 100%">Save password: When you save your settings in
+    the main poweroff screen, then the password&nbsp;for the remote machine is
+    also saved. This will store the password as plain&nbsp;text in the registry!</li>
+  <li>
+    <p style="line-height: 100%">Schedule on remote machine: When you don’t
+    use NT authentication, then you can choose to do scheduling&nbsp;locally or
+    on the remote machine. If you choose remote scheduling, then&nbsp;poweroff
+    must be running on the remote machine and you can stop your local&nbsp;poweroff
+    when the action has been submitted to the remote machine.&nbsp;Otherwise,
+    you have to leave your local poweroff program running until the&nbsp;time
+    arrives.&nbsp;</li>
+</ul>
+<p style="line-height: 100%">When the action is ‘Wake-On-LAN’, then you are
+presented with the following dialog&nbsp;box:<br>
+<br>
+<img border="0" src="Image4.gif" width="300" height="179"></p>
+<p style="line-height: 100%">Figure 4</p>
+<p style="line-height: 100%"><br>
+You have to specify the remote computer’s IP address, subnet mask and MAC&nbsp;address.
+The IP address and subnet mask are necessary to calculate the broadcast&nbsp;address.
+The magic packet is only broadcast to the right subnet. The MAC address is the
+physical hardware address of the computer’s network&nbsp;adapter. You can
+click the ‘Lookup’ button to find the hardware address. This performs&nbsp;a
+ping to the remote computer and then looks into the arp table for the IP
+address.&nbsp;This means that the lookup may not always work correctly. If the
+lookup fails, then&nbsp;you must get the MAC address from the remote computer
+itself by inspecting the&nbsp;network adapter’s properties. The MAC address is
+a series of 12 hexadecimal&nbsp;<br>
+numbers. Some adapters may display the MAC address as XX-XX-XX-XX-XX-XX,&nbsp;but
+in poweroff it must be specified without the dashes. This feature will only work
+on a LAN, not on a WAN or the internet.<br>
+</p>
+<h2 style="line-height: 100%">3.4 When to do the action</h2>
+<h3 style="line-height: 100%">3.4.1 Immediate</h3>
+<p style="line-height: 100%">Executes the desired action immediately when you
+press the ‘Do it’ button.</p>
+<h3 style="line-height: 100%">3.4.2 Scheduled</h3>
+<p style="line-height: 100%">Executes the action at a certain moment in time.
+Click the ‘Schedule’ button to&nbsp;specify when to execute the action.<br>
+<br>
+<img border="0" src="Image5.gif" width="419" height="318"></p>
+<p style="line-height: 100%">Figure 5</p>
+<p style="line-height: 100%">In the time field, you can specify the time when
+the action must be performed. The&nbsp;time format is hh:mm (0-23 hours).<br>
+<br>
+The date radio box lets you choose the days on which the action must be
+performed:</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed day: Performs the action only once on the
+    specified date. The date format is&nbsp;dd/mm/yyyy</li>
+  <li>
+    <p style="line-height: 100%">Daily: Performs the action on the days of the
+    week that you specify. You can also&nbsp;select the weeks of the month on
+    which to perform the action. For example you&nbsp;may choose to reboot your
+    pc at each Friday of weeks 1 and 3. This option&nbsp;requires that you
+    install the poweroff service.</li>
+  <li>
+    <p style="line-height: 100%">Day of month: Performs the action on a specific
+    day of the month each month.&nbsp;For example you may choose to reboot your
+    pc every 1st of the month. This&nbsp;option requires that you install the
+    poweroff service.</li>
+  <li>
+    <p style="line-height: 100%">After x seconds: Performs the action after the
+    specified number of seconds.<br>
+  </li>
+</ul>
+<h3 style="line-height: 100%">3.4.3 After a process stops</h3>
+<p style="line-height: 100%">Executes the action when some running process
+finishes. Click the ‘Process’ button&nbsp;to specify the process.</p>
+<p style="line-height: 100%"><img border="0" src="Image6.gif" width="285" height="132"></p>
+<p style="line-height: 100%">Figure 6</p>
+<p style="line-height: 100%">Here you can type the exact process name or choose
+the name from the current&nbsp;process list by clicking the ‘…’ button.</p>
+<p style="line-height: 100%"><img border="0" src="Image7.gif" width="198" height="296"></p>
+<p style="line-height: 100%">Figure 7<br>
+<br>
+Poweroff will poll the running processes every second. When the specified
+process is&nbsp;not running, the action will be executed. This can be useful for
+shutting down your pc&nbsp;when a certain program has finished or even as a
+watchdog to reboot the pc when a&nbsp;program that should be running has died.</p>
+<h2 style="line-height: 100%">3.5 Options</h2>
+<h3 style="line-height: 100%">3.5.1 Warning Message</h3>
+<p style="line-height: 100%">With this option you can give a warning message to
+the user before performing the&nbsp;<br>
+action. Click the ‘Message’ button to specify the message properties:<br>
+<br>
+<img border="0" src="Image8.gif" width="356" height="223"></p>
+<p style="line-height: 100%">Figure 8</p>
+<p style="line-height: 100%">You can enter the number of seconds that the
+warning message must be shown.&nbsp;When the seconds have passed, then the
+action is performed.<br>
+<br>
+You can also specify the message text that must be shown.<br>
+<br>
+If you want a sound to be played when the dialog box is shown, then you can
+select&nbsp;the ‘Play a sound’ checkbox. Then you must also specify the
+sound file that must be&nbsp;played. If the action must be performed on a remote
+computer, then the sound file&nbsp;must also exist on the remote computer!</p>
+<h3 style="line-height: 100%">3.5.2 Run a program</h3>
+<p style="line-height: 100%">This option allows you to run a program before the
+action is executed. This can be&nbsp;useful to properly shutdown some other
+program before shutting down your pc. Click&nbsp;the ‘Program’ button to
+enter the program options:</p>
+<p style="line-height: 100%"><img border="0" src="Image9.gif" width="335" height="140"></p>
+<p style="line-height: 100%">Figure 9</p>
+<p style="line-height: 100%">You must enter the program that must be executed,
+or choose it from a list by&nbsp;clicking the ‘…’ button. You can also
+specify the startup directory for the program of&nbsp;select it from a list by
+clicking the ‘…’ button.<br>
+<br>
+If you need to run multiple programs, then you should put them inside a batch
+file and&nbsp;then call the batch file from within poweroff.</p>
+<h3 style="line-height: 100%">3.5.3 Force applications to close</h3>
+<p style="line-height: 100%">This option is useful for forcing running
+applications to close. Otherwise some&nbsp;applications may not exit when
+Windows is shut down because they popup a dialog&nbsp;box or because they
+’hang’. This option kills all running programs before logging off,&nbsp;rebooting,
+shutdown or poweroff.<br>
+This also implies that any changes made in running programs will not be saved,
+so&nbsp;for example if you have a text editor open with unsaved changes, then
+the editor will&nbsp;be closed without asking you to save the changes!</p>
+<h3 style="line-height: 100%">3.5.4 Visible in tray</h3>
+<p style="line-height: 100%">When this option is selected, then the poweroff
+icon will be visible in the system tray&nbsp;when the ‘Do it’ button has
+been pressed and a non-immediate action has been&nbsp;selected. Otherwise,
+poweroff will seem to have disappeared and there’s no way to&nbsp;make it
+reappear.</p>
+<h3 style="line-height: 100%">3.5.5 Allow cancel</h3>
+<p style="line-height: 100%">When this option is selected, then you will be able
+to cancel any chosen action&nbsp;(except when ‘Immediate’ execution is
+selected). You will be able to cancel the action from the system tray and in the
+warning dialog (if&nbsp;those options are set).</p>
+<h3 style="line-height: 100%">3.5.6 Allow remote control</h3>
+<p style="line-height: 100%">When this option is selected, then other computers
+can connect to your pc and remotely perform all&nbsp;actions that poweroff
+supports on your pc remotely. This is useful when running&nbsp;poweroff as a
+service and when you’re the network administrator, then you can&nbsp;reboot
+remote machines from your pc. Click the ‘Settings’ button to specify remote&nbsp;control
+options:</p>
+<p style="line-height: 100%"><img border="0" src="Image10.gif" width="257" height="136"></p>
+<p style="line-height: 100%">Figure 10</p>
+<p style="line-height: 100%">You can specify the TCP port number where poweroff
+listens for connections. You can also specify a password that remote computers
+must enter before they gain&nbsp;access to your pc. This password is encrypted
+and stored in the registry.</p>
+<h2 style="line-height: 100%">3.6 Menu</h2>
+<h3 style="line-height: 100%">3.6.1 File menu</h3>
+<p style="line-height: 100%"><img border="0" src="Image11.gif" width="362" height="420"></p>
+<p style="line-height: 100%">Figure 11</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Save Settings: This saves the current settings
+    to the registry. The next time you&nbsp;start poweroff, it will read these
+    settings from the registry so that you don’t have to&nbsp;set your
+    preferred settings again.</li>
+  <li>
+    <p style="line-height: 100%">Load Settings: This reads the settings from the
+    registry and overwrites any&nbsp;changes made.</li>
+  <li>
+    <p style="line-height: 100%">Remove Settings: This removes all settings from
+    the registry and restores the&nbsp;default settings.</li>
+</ul>
+<h3 style="line-height: 100%">3.6.2 Service</h3>
+<p style="line-height: 100%"><img border="0" src="Image12.gif" width="362" height="420"></p>
+<p style="line-height: 100%">Figure 12</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Create service: This creates the poweroff
+    service. This makes poweroff run in the&nbsp;background and can even run
+    when you’re not logged on. The current settings&nbsp;are saved to the
+    registry so that the service can run with these settings. When the&nbsp;‘visible
+    in tray’ option is selected, then the poweroff service is accessible via
+    the&nbsp;system tray. The service will only execute some action when the
+    ‘Scheduled’&nbsp;option is selected, otherwise poweroff will just start
+    up and will be visible in the&nbsp;system tray (if that option was selected
+    of course).</li>
+  <li>
+    <p style="line-height: 100%">Remove service: This removes the poweroff
+    service. If the service is currently&nbsp;running, it is stopped (only on
+    NT/2000/XP). On 95/98/Me you will have to reboot&nbsp;in order to stop the
+    service. Removing the service will also remove the service&nbsp;settings.</li>
+  <li>
+    <p style="line-height: 100%">Save settings to service: This will save the
+    current settings to the service. On&nbsp;NT/2000/XP, the service will also
+    be restarted to pick up the new settings. On&nbsp;95/98/Me, you will have to
+    reboot for the service to pick up the changes.</li>
+  <li>
+    <p style="line-height: 100%">Load settings from service: This will read the
+    service settings from the registry&nbsp;and make them the current settings.</li>
+</ul>
+<h2 style="line-height: 100%">3.7 Event Logging</h2>
+<p style="line-height: 100%">If you have Windows NT/2000/XP, then you can always
+check the event log&nbsp;(application log) for messages from poweroff. Here you
+can find information and error&nbsp;messages about the actions that were
+performed.</p>
+<h1 style="line-height: 100%">4 Command-line options</h1>
+<p style="line-height: 100%">You can control every option and setting from the
+command-line. This makes&nbsp;poweroff excellent for use in batch files. Some
+options have changed since&nbsp;previous releases, so check your batch files! If
+you do poweroff /?, you will get an&nbsp;overview of all the options (look above
+for a description of all the settings):</p>
+<pre style="line-height: 100%">Usage: poweroff action [options]
+Actions: logoff, reboot, shutdown, poweroff, standby, hibernate, lock, wol, monitor_off, monitor_on or no_action
+Options:
+-warn 		: Show a warning message before doing the action
+-warntime s 	: Show the warning message for s seconds
+-playsound 	: Play a sound when the warning is displayed
+-soundfile “f” 	: Specifies the .WAV file that must be played
+-msg &quot;m&quot; 	: Specifies the warning message, use \n for a newline character
+-force 		: Force applications to close
+-wait s 	: Wait s seconds before checking the time
+-remote m 	: Do the action on the remote machine m (name or ip)
+-remschedule	: Do the scheduling on the remote machine
+-use_nt 	: Use the NT protocol to shutdown/reboot a remote machine
+-port p 	: Use port p to connect to the remote machine
+-username u 	: User NT username u to connect to the remote machine
+-password p 	: Use password p to connect to the remote machine
+-run 		: Run a program before doing the action
+-program &quot;p&quot; 	: Runs program p before doing the action
+-directory &quot;d&quot; 	: Start the program in directory d
+-notray 	: Do not show poweroff icon in the system tray
+-nocancel 	: Do not allow the user to cancel the action from the tray or in the&nbsp;warning dialog
+-immediate 	: Perform the action immediately (default)
+-scheduled 	: Perform the action in a scheduled manner
+-time hh:mm 	: Perform the action at the specified time
+-date dd/mm/yyyy: Perform the action on the specified date
+-days [m,t,...] : Perform the action on the spcified days of the week&nbsp;(m,t,w,th,s,su)
+-weeks [1,..,5]	: Perform the action on the spcified weeks (default=all weeks)
+-day d 		: Perform the action on the specified day of the month (1-31)
+-seconds n 	: Perform the action after n seconds
+-process p 	: Perform the action when a process named p does not exist&nbsp;anymore
+-ip ip 		: Specifies the ip adress for WOL
+-subnet s 	: Specifies the subnet mask for WOL
+-mac m 		: Specifies the mac address for WOL
+-allow_remote 	: Allow remote control
+-remote_port p 	: Listen on port p for commands
+-remote_pswd p 	: Set a password that clients must give for remote control
+-simulate 	: Simulate all actions, do not perform them
+-minimize 	: Start minimized in the system tray
+-quiet 		: Don't display error messages
+-save_settings 	: Saves current settings to the registry
+-remove_settings: Remove the settings from the registry
+-save_svc_set 	: Save current settings to the service
+-remove_svc_set	: Removes the service settings
+-create_service : Creates the poweroff service, including the settings
+-remove_service : Removes the poweroff service, including the settings
+-debug          : Start poweroff in debug mode
+</pre>
+<p style="line-height: 100%">Examples:</p>
+<p style="line-height: 100%">The following command shuts down the pc after
+giving a 10 second warning.</p>
+<p style="line-height: 100%">C:\poweroff\poweroff poweroff -warn -warntime 10
+-msg &quot;You will be logged off in 10 seconds&quot;<br>
+<br>
+The following command creates a service that shuts down the pc everyday at
+23:00,&nbsp;forces all applications to close, gives a warning to the user, plays
+a sound file when&nbsp;the warning dialog is shown and listens for remote
+control using a password:<br>
+<br>
+C:\poweroff\poweroff poweroff -warn -warntime 60 -msg &quot;You pc will poweroff
+in 60 seconds\nPlease save your work&quot;&nbsp;-playsound -soundfile
+&quot;d:\winnt\media\ringin.wav&quot; -force -scheduled -time 23:00 -days
+m,t,w,th,f,s,su&nbsp;-allow_remote -remote_pswd password -create_service<br>
+<br>
+The following command will shutdown a remote computer using the standard NT&nbsp;protocol:<br>
+<br>
+C:\poweroff\poweroff shutdown -remote computer -use_nt -username
+computer\administrator&nbsp;-password password<br>
+<br>
+The following command will reboot the computer after a program (cmd.exe) has&nbsp;finished:</p>
+<p style="line-height: 100%">C:\poweroff\poweroff reboot –process cmd.exe<br>
+<br>
+The following command will wake up a remote computer:</p>
+<p style="line-height: 100%">C:\poweroff\poweroff wol –ip 10.0.0.1 –subnet
+255.255.255.0 –mac 0050BF0852A2<br>
+<br>
+The following command will log off the user 60 minutes after logging on when the&nbsp;command
+is put inside the startup folder. The user will not be able to see that&nbsp;poweroff
+is running and will not be able to cancel it:<br>
+<br>
+C:\poweroff\poweroff logoff –scheduled –seconds 3600 –notray –nocancel
+–force<br>
+<br>
+This command simply powers off your computer:<br>
+<br>
+C:\poweroff\poweroff poweroff</p>
+<h1 style="line-height: 100%">5 Remote Control</h1>
+<p style="line-height: 100%">You can remotely control poweroff by starting it as
+a service and setting the ‘Allow&nbsp;remote control’ option. You can
+control it by using poweroff itself and selecting a&nbsp;remote computer, or you
+can control it by using telnet to the port where poweroff&nbsp;listens on
+(default 3210). For example telnet computer 3210. You’ll see a welcome message
+like this:</p>
+<p style="line-height: 100%">201 Welcome to Poweroff 3.0 created by Jorgen
+Bosman</p>
+<p style="line-height: 100%">Poweroff uses a protocol like ftp or smtp with
+commands and reply codes.&nbsp;You enter a command and poweroff will reply with
+‘2xx message’ on success or ‘5xx&nbsp;message’ on error.<br>
+<br>
+You can enter the following commands:</p>
+<pre style="line-height: 100%">QUIT 		Terminates the connection
+HELP 		Shows this help
+PASSWORD p 	Authenticates the client with a password
+ACTION a 	The action to perform (logoff, reboot, shutdown, poweroff,&nbsp;standby, hibernate, lock, wol, monitor_off, monitor_on, no_action)
+WHO w 		Who must perform the action (local, remote)
+WHEN w 		When must the action be performed (immediate, scheduled,&nbsp;after_process)
+SIMULATE s 	Simulate the action (on, off)
+COMPUTER c 	The remote computer name
+MAC m 		The remote computer mac address (WOL)
+IP i 		The remote computer ip address (WOL)
+SUBNET s 	The remote computer subnet mask (WOL)
+WARNING w 	Show warning before doing the action (on, off)
+WARNTIME w 	The number of seconds to show the warning
+MESSAGE m 	The warning message
+PLAYSOUND p 	Play a sound when showing the warning (on, off)
+SOUNDFILE s 	The WAV file to play
+RUNPRG r 	Runs a program before doing the action (on, off)
+PROGRAM p 	The program to run
+DIRECTORY d 	The startup directory for the program
+SCHEDULE s 	The type of schedule (fixed_day, daily, day_of_month,&nbsp;after_x_seconds)
+TIME t 		The time when to do the action (hh:mm)
+DATE d 		The date when to do the action (dd/mm/yyyy)
+DAYS d 		The days of the week when to do the action (m, t, w, th, f, s, su)
+WEEKS d 	The weeks of the month when to do the action (1, 2, 3, 4, 5)
+DAY d 		The day of the month when to do the action (1-31)
+WAIT w 		The number of seconds to wait before checking the time
+SECONDS w 	The number of seconds to wait before doing the action
+PROCESS p 	Wait for process p to finish
+FORCE f 	Force applications to close (on, off)
+CANCEL c 	Allow the user to cancel the action (on, off)
+SHOW 		Show current settings
+VERSION 	Show current poweroff version
+DOIT 		Do the action
+STOP		Stops the current scheduled action
+
+Example:
+telnet computer 3210
+
+201 Welcome to Poweroff 3.0.0.5 created by Jorgen Bosman
+action logoff
+250 OK
+warning on
+250 OK
+message You will be logged off in 10 seconds
+250 OK
+warntime 10
+250 OK
+doit
+250 OK
+quit
+201 Bye bye
+Connection closed by foreign host.</pre>
+<h1 style="line-height: 100%">6 System Tray</h1>
+<p style="line-height: 100%">When poweroff is minimized or it has a scheduled
+action, it sits in the system tray. You can right click the icon, then a popup
+menu appears:</p>
+<p style="line-height: 100%"><img border="0" src="Image13.gif" width="151" height="222"></p>
+<p style="line-height: 100%">Figure 13</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Restore: Restores the main window and removes
+    poweroff from the system tray.&nbsp;Only available when not executing a
+    scheduled action.</li>
+  <li>
+    <p style="line-height: 100%">Logoff/Reboot/Shutdown/Poweroff/Standby/Hibernate/Lock/Monitor
+    off: Quickly performs the&nbsp;action requested. If the allow cancel option
+    is disabled, then the action is performed immediately.</li>
+  <li>
+    <p style="line-height: 100%">Cancel pending action: Cancels a scheduled
+    action and restores the main window&nbsp;again. Only available when a
+    scheduled action is executing and the ‘Allow cancel’&nbsp;option is
+    activated.</li>
+  <li>
+    <p style="line-height: 100%">Exit: Quits poweroff</li>
+</ul>
+<h1 style="line-height: 100%">7 History</h1>
+<p style="line-height: 100%">V3.0.1.3: 10-08-2003</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Standby/Hibernate should now allow wake up
+    events.</li>
+  <li>
+    <p style="line-height: 100%">Fixed bug with -debug option when started as a
+    service.</li>
+</ul>
+<p style="line-height: 100%">V3.0.1.2: 04-08-2003</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed problem with event log filling up with
+    'invalid window handle' messages.</li>
+  <li>
+    <p style="line-height: 100%">Added scheduled action tooltip when poweroff is
+    minimized to the tray.</li>
+</ul>
+<p style="line-height: 100%">V3.0.1.1: 31-07-2003</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">poweroff now also should leave focus to running
+    program in win95/98/Me when starting with command-line action or minimized.</li>
+</ul>
+<p style="line-height: 100%">V3.0.1.0: 26-07-2003</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added 3 new actions: Turn off monitor, Turn on
+    monitor and No action. (also on command-line and remote telnet commands)
+    [only tested on XP]</li>
+  <li>
+    <p style="line-height: 100%">Starting poweroff minimized no longer takes
+    away focus of the running application</li>
+  <li>
+    <p style="line-height: 100%">Choosing a quick action from the tray no longer
+    asks for confirmation when the 'allow cancel' option was selected.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.17: 31-03-2003</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed bug: choosing WOL after the 'use nt'
+    options was selected would return error.</li>
+  <li>
+    <p style="line-height: 100%">Added more logging with -debug option.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.16: 31-02-2003</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">The -save_svc_set commandline option now
+    automatically restarts the service if it is running.</li>
+  <li>
+    <p style="line-height: 100%">Added the STOP command in a telnet session.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.15: 05-08-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Implemented workaround for Windows bug: Logoff
+    while nobody was logged on caused Windows XP to display an empty screen and
+    you were forced to turn off power. Poweroff now checks if a user is logged
+    on before trying to logoff the user.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.14: 27-07-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed crash with new hibernate support</li>
+  <li>
+    <p style="line-height: 100%">Added -debug command line option to easily turn
+    on debugging</li>
+  <li>
+    <p style="line-height: 100%">When the new hibernate/standby method fails,
+    poweroff now tries the old method again.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.13: 24-07-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added hibernate support for Win98/Me systems.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.12: 11-07-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Moved buttons a little bit</li>
+  <li>
+    <p style="line-height: 100%">Enabled the poweroff action in Windows
+    95/98/Me. Some people reported that the system didn't poweroff with the
+    normal shutdown action. Maybe this action does the trick.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.11: 27-05-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed 'Invalid time specified' bug when doing
+    remote action with scheduled 'after x seconds' time.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.10: 08-04-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed memory leak and improved performance a
+    little bit when polling for running processes under win9x</li>
+  <li>
+    <p style="line-height: 100%">Main window can be closed and minimized again</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.9: 26-02-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed keyboard navigation. You can now move
+    around the main dialog again with the keyboard.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.8: 23-02-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Removed the use of gethostbyaddr() because it
+    seems that this call queries the DNS server. This causes a problem when you
+    do not have a DNS server configured.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.7: 16-02-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed a bug when \n\n was specified inside the
+    warning message on the command-line</li>
+  <li>
+    <p style="line-height: 100%">You can now escape \n with <a href="file://n">\\n</a>
+    if you want to put &quot;\n&quot; inside the warning message</li>
+  <li>
+    <p style="line-height: 100%">If you just specified -remote m , then the
+    default port number was 0. Now it's 3210.</li>
+  <li>
+    <p style="line-height: 100%">Added the possibility to generate lots of debug
+    information. You can turn on debugging by creating a registry value
+    HKEY_CURRENT_USER\Software\JoBo\Poweroff\debug of type DWORD and by giving
+    it a value of 1. If you use the poweroff service, you can enable debug for
+    the service by creating a registry value
+    HKEY_LOCAL_MACHINE\System\CurrentControlSet\Poweroff\Parameters\debug of
+    type DWORD and by giving it a value of 1. Then restart the service. Poweroff
+    should now create a file called poweroff.log in its startup directory.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.6: 02-02-2002</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added the possibility to enter a multiline
+    message via the command-line by using \n as newline character</li>
+  <li>
+    <p style="line-height: 100%">Added the -remschedule command-line argument</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.5: 06-12-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added a check on the schedule dialog box to see
+    if at least one week has been&nbsp;selected</li>
+  <li>
+    <p style="line-height: 100%">Added a busy cursor while sending the remote
+    command.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.4: 16-11-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Fixed documentation bug</li>
+  <li>
+    <p style="line-height: 100%">Moved the settings again to
+    HKCU\Software\JoBo\Poweroff. Should I produce more programs that write to
+    the registry, then they can all be stored under the&nbsp;same ‘JoBo’
+    branch.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.3: 14-11-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added current time to the schedule dialog</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.2: 12-11-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Settings are now stored by default in
+    HKEY_CURRENT_USER</li>
+  <li>
+    <p style="line-height: 100%">You can now create a service with ‘allow
+    remote control’ without getting an error.&nbsp;This setting will now only
+    work when poweroff is run as a service.</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.1: 09-11-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Now uses different socket library so that it
+    can be used with Win95</li>
+  <li>
+    <p style="line-height: 100%">Fixed bug: Ordering of controls was wrong. This
+    caused radio groups to be&nbsp;misaligned and caused the ‘visible in
+    tray’ checkbox to be incorrectly turned off in&nbsp;win95/98/Me</li>
+  <li>
+    <p style="line-height: 100%">Added full version number in title bar</li>
+  <li>
+    <p style="line-height: 100%">Fixed bug: When poweroff is run as a service
+    and ‘Visible in tray’ is off, then no&nbsp;icon is shown in the system
+    tray</li>
+</ul>
+<p style="line-height: 100%">V3.0.0.0: 06-11-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Completely rewritten engine.</li>
+  <li>
+    <p style="line-height: 100%">Added Wake-On-LAN.</li>
+  <li>
+    <p style="line-height: 100%">Improved remote control, including NT
+    authentication with another user and&nbsp;poweroff-to-poweroff communication
+    which means that all poweroff features are&nbsp;available on the remote
+    computer. With password protection.</li>
+  <li>
+    <p style="line-height: 100%">You can now play a wav file when the warning
+    dialog is shown.</li>
+  <li>
+    <p style="line-height: 100%">You can cancel the action when the warning
+    dialog is shown.</li>
+  <li>
+    <p style="line-height: 100%">You can run a program when the action is about
+    to be performed.</li>
+  <li>
+    <p style="line-height: 100%">You can quickly execute an action from the
+    system tray.</li>
+  <li>
+    <p style="line-height: 100%">You can specify whether users can cancel an
+    action or not.</li>
+  <li>
+    <p style="line-height: 100%">It has a built-in scheduler, now you can
+    schedule at a fixed date, daily, weekly or&nbsp;a day of the month.</li>
+  <li>
+    <p style="line-height: 100%">It can run as a service (required for some
+    schedules).</li>
+  <li>
+    <p style="line-height: 100%">You can save your settings, so that you don’t
+    have to fill them in each time you&nbsp;start poweroff.</li>
+  <li>
+    <p style="line-height: 100%">Full command-line control.</li>
+  <li>
+    <p style="line-height: 100%">You can wait for a process to finish before
+    executing an action.</li>
+  <li>
+    <p style="line-height: 100%">New icon (again).</li>
+  <li>
+    <p style="line-height: 100%">Windows XP support for new visual styles.</li>
+</ul>
+<p style="line-height: 100%">V2.1: 25-05-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added Standby (95/98/Me/2000), Hibernate (2000)
+    and Lock (2000) actions</li>
+  <li>
+    <p style="line-height: 100%">Improved event logging a little bit</li>
+  <li>
+    <p style="line-height: 100%">Default time is now rounded to the next hour</li>
+</ul>
+<p style="line-height: 100%">V2.0: 14-04-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added remote shutdown/reboot</li>
+  <li>
+    <p style="line-height: 100%">Add warning dialog</li>
+</ul>
+<p style="line-height: 100%">V1.3.3: 15-03-2001</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added the command line option -w</li>
+</ul>
+<p style="line-height: 100%">V1.3.2: 12-12-2000</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added the command line option to specify a date
+    (dd/mm/yyyy:HH:MM)</li>
+</ul>
+<p style="line-height: 100%">V1.3.1: 28-11-2000</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added event logging on NT/2000</li>
+</ul>
+<p style="line-height: 100%">V1.3: 19-05-2000</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added command-line option to specify a certain
+    time (hh:mm)</li>
+</ul>
+<p style="line-height: 100%">V1.2: 03-03-2000</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added command-line parameters, so that you can
+    use poweroff in batch files</li>
+</ul>
+<p style="line-height: 100%">V1.1: 27-05-1999</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">Added a date field</li>
+  <li>
+    <p style="line-height: 100%">Added the current date and time</li>
+  <li>
+    <p style="line-height: 100%">Added the Now button to immediately do the
+    required action</li>
+  <li>
+    <p style="line-height: 100%">Hide now adds an icon to the system tray.
+    Double-click the icon to bring the&nbsp;screen back up.</li>
+  <li>
+    <p style="line-height: 100%">Added a force checkbox. If checked, all
+    applications terminate without warning.</li>
+  <li>
+    <p style="line-height: 100%">Changed the format of the time to hh:mm:ss</li>
+  <li>
+    <p style="line-height: 100%">The format of the date field is dd/mm/yyyy</li>
+  <li>
+    <p style="line-height: 100%">Poweroff now also appears in the taskbar</li>
+</ul>
+<p style="line-height: 100%">V1.0: 08-05-1999</p>
+<ul>
+  <li>
+    <p style="line-height: 100%">First release</li>
+</ul>
+<h1 style="line-height: 100%">8 FAQ</h1>
+<h3 style="line-height: 100%">8.1 When I try to control a remote pc I get the
+message Connect(): Connection Refused(10061)</h3>
+<p style="line-height: 100%">Make sure that you have installed the poweroff
+service on the remote pc after enabling the 'allow remote' option. Also make
+sure that there's no firewall blocking the poweroff tcp port (default 3210). You
+can test it by doing a telnet to the remote pc on the poweroff port, you should
+get a welcome message.</p>
+<h3 style="line-height: 100%">8.2 What is the difference between Shutdown and
+Poweroff?</h3>
+<p>Normally, the shutdown action will shutdown your pc and give the message 'It
+is safe to shutdown your pc'.The poweroff action should actually poweroff your
+pc. However, some pc's might act differently depending on their power settings.</p>
+<h3 style="line-height: 100%">8.3 Can I schedule an action after a certain
+amount of inactivity?</h3>
+<p>No, with the current version, you cannot.</p>
+<h3 style="line-height: 100%">8.4 Can I poweroff a group of remote pc's?</h3>
+<p>Not directly, but you can create a batch file that calls poweroff.exe with
+command-line options for each pc.</p>
+<p>&nbsp;</p>
+<h1 style="line-height: 100%">9 Contact</h1>
+<p style="line-height: 100%">You can contact me for any questions, bugs,
+enhancement requests,&nbsp;congratulations,… at the following coordinates:<br>
+If you want to thank me, please have a look at my <a href="http://users.pandora.be/jbosman/goodies_whishlist.htm">goodies
+whishlist</a>!</p>
+<p style="line-height: 100%"><br>
+Xjorgen.bosman@pandora.beX (remove X, and please DO NOT put me in your address
+book!)<br>
+</p>
+<p style="line-height: 100%">Home address:<br>
+Jorgen Bosman<br>
+Groot Hagelkruis 179F<br>
+2030 Antwerpen<br>
+Belgium<br>
+<br>
+<br>
+You can always find the latest version (and other tools) at:<br>
+<a href="http://users.pandora.be/jbosman/applications.html">http://users.pandora.be/jbosman/applications.html</a><br>
+<br>
+The new direct download link for poweroff 3.0 is:<br>
+<a href="http://users.pandora.be/jbosman/pwroff30.zip">http://users.pandora.be/jbosman/pwroff30.zip</a><br>
+<br>
+<br>
+Poweroff 3.0 created by Jorgen Bosman&nbsp;</p>
+<p style="line-height: 100%">This is Freeware!</p>
+</body>
+</HTML>

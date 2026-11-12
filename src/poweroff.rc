@@ -1,0 +1,565 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_POWEROFF DIALOGEX 0, 0, 238, 231
+STYLE DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_CONTROLPARENT
+MENU IDR_POWEROFF
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "Local Computer",IDC_LOCAL_COMPUTER,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,14,17,65,10
+    CONTROL         "Remote Computer",IDC_REMOTE_COMPUTER,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,91,17,73,10
+    PUSHBUTTON      "Specify...",IDC_BUT_REMOTE,183,15,46,14
+    CONTROL         "Logoff",IDC_LOGOFF,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP | WS_TABSTOP,11,52,59,10
+    CONTROL         "Reboot",IDC_REBOOT,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,11,67,39,10
+    CONTROL         "Shutdown",IDC_SHUTDOWN,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,11,82,48,10
+    CONTROL         "Poweroff",IDC_POWEROFF,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,11,97,44,10
+    CONTROL         "Standby",IDC_STANDBY,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,11,112,42,10
+    CONTROL         "Hibernate",IDC_HIBERNATE,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,11,127,47,10
+    CONTROL         "Lock",IDC_LOCK,"Button",BS_AUTORADIOBUTTON | WS_TABSTOP,
+                    11,142,32,10
+    CONTROL         "Wake-On-LAN",IDC_WAKE_ON_LAN,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,11,157,61,10
+    CONTROL         "Turn off monitor",IDC_MONITOR_OFF,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,11,172,61,10
+    CONTROL         "Turn on monitor",IDC_MONITOR_ON,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,11,187,61,10
+    CONTROL         "No action",IDC_NO_ACTION,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,11,202,61,10
+    CONTROL         "Warning message",IDC_WARNING,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,93,49,73,10
+    PUSHBUTTON      "Message...",IDC_BUT_MESSAGE,183,47,46,14
+    CONTROL         "Run program",IDC_PRE_JOB,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,93,65,57,10
+    PUSHBUTTON      "Program...",IDC_BUT_PROGRAM,183,64,46,14
+    CONTROL         "Force applications to close",IDC_FORCE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,93,81,100,10
+    CONTROL         "Visible in tray",IDC_TRAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,93,97,57,10
+    CONTROL         "Allow cancel",IDC_ALLOW_CANCEL,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,93,113,56,10
+    CONTROL         "Allow remote control",IDC_ALLOW_REMOTE_CONTROL,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,93,130,79,10
+    PUSHBUTTON      "Settings...",IDC_BUT_REMOTE_CONTROL,183,128,46,14
+    CONTROL         "Immediate",IDC_IMMEDIATE,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP | WS_TABSTOP,95,162,48,10
+    CONTROL         "Scheduled",IDC_SCHEDULED,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,95,178,50,10
+    PUSHBUTTON      "Schedule...",IDC_BUT_SCHEDULE,183,175,46,14
+    CONTROL         "After a process stops",IDC_AFTER_PROCESS,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,95,194,82,10
+    PUSHBUTTON      "Process...",IDC_BUT_PROCESS,183,191,46,14
+    DEFPUSHBUTTON   "Do it",IDC_OK,122,210,51,14
+    PUSHBUTTON      "Close",IDC_CANCEL,180,210,51,14
+    GROUPBOX        "Select Computer",IDC_ACTION,7,7,224,28,WS_GROUP
+    GROUPBOX        "Action",IDC_ACTION,7,38,71,180,WS_GROUP
+    GROUPBOX        "Options",IDC_OPTIONS,89,38,142,107,WS_GROUP
+    GROUPBOX        "When",IDC_SCHEDULE,89,151,142,56,WS_GROUP
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_POWEROFF, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 231
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 224
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 3,0,1,3
+ PRODUCTVERSION 3,0,1,3
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "jorgen.bosman@pandora.be\0"
+            VALUE "CompanyName", "Jorgen Bosman\0"
+            VALUE "FileDescription", "poweroff\0"
+            VALUE "FileVersion", "3, 0, 1, 3\0"
+            VALUE "InternalName", "poweroff\0"
+            VALUE "LegalCopyright", "Created in 1999-2002\0"
+            VALUE "LegalTrademarks", "This is freeware!\0"
+            VALUE "OriginalFilename", "poweroff.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "Poweroff\0"
+            VALUE "ProductVersion", "3, 0, 1, 3\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // !_MAC
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Dutch (Belgium) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLB)
+#ifdef _WIN32
+LANGUAGE LANG_DUTCH, SUBLANG_DUTCH_BELGIAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_WARNING DIALOG DISCARDABLE  0, 0, 186, 117
+STYLE DS_SYSMODAL | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_VISIBLE | 
+    WS_CAPTION
+CAPTION "Computer is shutting down"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDC_DO_IT_NOW,7,96,82,14
+    EDITTEXT        IDC_SHUTDOWN_TEXT,7,21,172,56,ES_CENTER | ES_MULTILINE | 
+                    ES_AUTOVSCROLL
+    CTEXT           "POWEROFF Initiated",IDC_SHUTDOWN_INFO,7,7,172,8
+    CTEXT           "Time left: 0 seconds",IDC_SHUTDOWN_TIME,7,79,172,8
+    PUSHBUTTON      "Cancel",IDC_CANCEL,97,96,82,14
+END
+
+IDD_SCHEDULE DIALOG DISCARDABLE  0, 0, 275, 180
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Schedule"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "DateTimePicker1",IDC_TIME,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | DTS_UPDOWN | WS_TABSTOP | 0x8,36,7,80,
+                    15
+    CONTROL         "Fixed day",IDC_FIXED_DAY,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,36,25,46,10
+    CONTROL         "Daily",IDC_FIXED_DAYS,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,36,40,31,10
+    CONTROL         "Day of month",IDC_FIXED_MONTH_DAY,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,36,104,58,10
+    CONTROL         "After",IDC_AFTER_X_SECONDS,"Button",BS_AUTORADIOBUTTON | 
+                    WS_TABSTOP,36,120,31,10
+    CONTROL         "DateTimePicker1",IDC_DATE,"SysDateTimePick32",
+                    DTS_RIGHTALIGN | WS_TABSTOP,99,23,80,15
+    CONTROL         "Monday",IDC_MONDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,99,40,41,10
+    CONTROL         "Tuesday",IDC_TUESDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,99,51,43,10
+    CONTROL         "Wednesday",IDC_WEDNESDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,99,62,54,10
+    CONTROL         "Thursday",IDC_THURSDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,99,74,45,10
+    CONTROL         "Friday",IDC_FRIDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,99,85,35,10
+    CONTROL         "Saturday",IDC_SATURDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,157,40,44,10
+    CONTROL         "Sunday",IDC_SUNDAY,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,157,51,40,10
+    CONTROL         "Week 1",IDC_WEEK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    214,40,41,10
+    CONTROL         "Week 2",IDC_WEEK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    214,51,41,10
+    CONTROL         "Week 3",IDC_WEEK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    214,62,41,10
+    CONTROL         "Week 4",IDC_WEEK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    214,74,41,10
+    CONTROL         "Week 5",IDC_WEEK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    214,85,41,10
+    EDITTEXT        IDC_MONTH_DAY,99,102,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_AFTER_SECONDS,99,118,40,14,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    LTEXT           "Seconds",IDC_STATIC,143,121,29,8
+    EDITTEXT        IDC_WAITTIME,36,138,40,14,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    DEFPUSHBUTTON   "OK",IDOK,162,159,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,218,159,50,14
+    LTEXT           "Time:",IDC_TIME_TEXT,7,10,18,8
+    LTEXT           "Date:",IDC_TIME_TEXT2,7,26,18,8
+    LTEXT           "Wait:",IDC_WAIT_TEXT1,7,141,18,8
+    LTEXT           "seconds before checking time",IDC_WAIT_TEXT2,78,141,96,
+                    8
+    LTEXT           "Current time:",IDC_CURRENT_TIME_TEXT,119,10,40,8
+    LTEXT           "00:00:00",IDC_CURRENT_TIME,163,10,44,8
+END
+
+IDD_WARNING_MESSAGE DIALOG DISCARDABLE  0, 0, 233, 122
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Warning message"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_WARNING_TIME,86,7,40,14,ES_RIGHT | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    EDITTEXT        IDC_WARNING_MESSAGE,86,23,140,45,ES_MULTILINE | 
+                    ES_AUTOVSCROLL | ES_WANTRETURN | WS_VSCROLL
+    CONTROL         "",IDC_PLAY_SOUND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    86,70,8,8
+    EDITTEXT        IDC_SOUND_FILE,86,81,124,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BROWSE_SOUND,212,81,14,14
+    DEFPUSHBUTTON   "OK",IDOK,121,101,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,176,101,50,14
+    LTEXT           "Time to display warning:",IDC_WARNING_TIME_TEXT,7,10,76,
+                    8
+    LTEXT           "seconds",IDC_SECS_TEXT,127,10,28,8
+    LTEXT           "Warning message:",IDC_WARNING_TEXT,7,22,60,8
+    LTEXT           "Play a sound:",IDC_PLAY_SOUND_TEXT,7,70,44,8
+    LTEXT           "Sound file:",IDC_SOUND_FILE_TEXT,7,84,34,8
+END
+
+IDD_REMOTE DIALOG DISCARDABLE  0, 0, 231, 156
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remote computer"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_COMPUTER,104,11,100,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BROWSE,208,11,16,14
+    CONTROL         "(only shutdown and reboot)",IDC_REMOTE_NT,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,104,29,120,8
+    CONTROL         "",IDC_REMOTE_CREDENTIALS,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,104,43,120,8
+    EDITTEXT        IDC_REMOTE_USERNAME,104,55,100,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_REMOTE_PASSWORD,104,72,100,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    EDITTEXT        IDC_REMOTE_PORT,104,90,100,14,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "(will be stored as plain text!)",
+                    IDC_REMOTE_SAVE_PASSWORD,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,104,109,120,8
+    CONTROL         "",IDC_REMOTE_SCHEDULE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,104,123,75,8
+    DEFPUSHBUTTON   "OK",IDOK,112,135,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,174,135,50,14
+    LTEXT           "Computer name:",IDC_REMOTE_TEXT,7,14,52,8
+    LTEXT           "Use NT protocol:",IDC_REMOTE_NT_TEXT,7,29,55,8
+    LTEXT           "Password:",IDC_REMOTE_PASSWORD_TEXT,7,75,34,8
+    LTEXT           "Port number:",IDC_REMOTE_PORT_TEXT,7,93,41,8
+    LTEXT           "Save password:",IDC_REMOTE_SAVE_TEXT,7,109,52,8
+    LTEXT           "Schedule on remote machine:",IDC_REMOTE_SCHEDULE_TEXT,7,
+                    123,95,8
+    LTEXT           "Use current credentials:",IDC_REMOTE_CURRENT_TEXT,7,43,
+                    76,8
+    LTEXT           "NT Username:",IDC_REMOTE_PORT_TEXT2,7,58,47,8
+END
+
+IDD_PROGRAM DIALOG DISCARDABLE  0, 0, 219, 71
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Program"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_PROGRAM_NAME,66,10,127,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BROWSE,196,10,16,14
+    EDITTEXT        IDC_PROGRAM_DIRECTORY,66,27,127,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BROWSE_DIRECTORY,196,27,16,14
+    DEFPUSHBUTTON   "OK",IDOK,106,50,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,162,50,50,14
+    LTEXT           "Program:",IDC_PROGRAM_TEXT,7,13,29,8
+    LTEXT           "Startup directory:",IDC_PROGRAM_DIR,7,30,54,8
+END
+
+IDD_PROCESS DIALOG DISCARDABLE  0, 0, 186, 66
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Process"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_PROCESS,47,18,114,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BUT_PROCESS,163,18,16,14
+    DEFPUSHBUTTON   "OK",IDOK,71,45,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,129,45,50,14
+    LTEXT           "Process:",IDC_PROCESS_TEXT,13,21,32,8
+END
+
+IDD_PROCESS_BROWSER DIALOG DISCARDABLE  0, 0, 128, 167
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select process"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LISTBOX         IDC_PROCESS_LIST,7,7,114,136,LBS_SORT | 
+                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_HSCROLL | 
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "OK",IDOK,7,146,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,71,146,50,14
+END
+
+IDD_WOL DIALOG DISCARDABLE  0, 0, 196, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Wake On LAN"
+FONT 8, "MS Sans Serif"
+BEGIN
+    CONTROL         "IPAddress1",IDC_IP_ADDRESS,"SysIPAddress32",WS_TABSTOP,
+                    58,7,100,15
+    CONTROL         "IPAddress1",IDC_SUBNET_MASK,"SysIPAddress32",WS_TABSTOP,
+                    58,27,100,15
+    EDITTEXT        IDC_MAC_ADDRESS,58,47,100,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Lookup",IDC_BUT_LOOKUP,159,47,30,14
+    DEFPUSHBUTTON   "OK",IDOK,85,74,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,139,74,50,14
+    LTEXT           "IP Address:",IDC_IP_ADDRESS_TEXT,7,10,37,8
+    LTEXT           "Subnet mask:",IDC_SUBNET_MASK_TEXT,7,30,44,8
+    LTEXT           "MAC Address:",IDC_MAC_ADDRESS_TEXT,7,50,45,8
+END
+
+IDD_REMOTE_CONTROL DIALOG DISCARDABLE  0, 0, 167, 68
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remote Control"
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_REMOTE_PORT,58,7,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_REMOTE_PASSWORD,58,24,102,14,ES_PASSWORD | 
+                    ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,51,47,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,110,47,50,14
+    LTEXT           "Port number:",IDC_REMOTE_PORT_TEXT,7,9,41,8
+    LTEXT           "Password:",IDC_REMOTE_PASSWORD_TEXT,7,26,34,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_WARNING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 110
+    END
+
+    IDD_SCHEDULE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 268
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 173
+    END
+
+    IDD_WARNING_MESSAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 226
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 115
+    END
+
+    IDD_REMOTE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 224
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_PROGRAM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 212
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 64
+    END
+
+    IDD_PROCESS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 59
+    END
+
+    IDD_PROCESS_BROWSER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 121
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 160
+    END
+
+    IDD_WOL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 189
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    IDD_REMOTE_CONTROL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 160
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 61
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 24
+//
+
+1                       24      MOVEABLE PURE   "poweroff.exe.manifest"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_POWEROFF            ICON    DISCARDABLE     "ipoweroff_new.ico"
+IDI_POWEROFF_SMALL      ICON    DISCARDABLE     "ipoweroff_small.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_QUICKMENU MENU DISCARDABLE 
+BEGIN
+    POPUP "Action"
+    BEGIN
+        MENUITEM "Restore",                     IDC_RESTORE
+        MENUITEM SEPARATOR
+        MENUITEM "Logoff",                      IDC_LOGOFF
+        MENUITEM "Reboot",                      IDC_REBOOT
+        MENUITEM "Shutdown",                    IDC_SHUTDOWN
+        MENUITEM "Poweroff",                    IDC_POWEROFF
+        MENUITEM "Standby",                     IDC_STANDBY
+        MENUITEM "Hibernate",                   IDC_Q_HIBERNATE
+        MENUITEM "Lock",                        IDC_Q_LOCK
+        MENUITEM "Monitor off",                 IDC_Q_MONITOR_OFF
+        MENUITEM SEPARATOR
+        MENUITEM "Cancel pending action",       IDC_CANCEL
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        IDC_EXIT
+    END
+END
+
+IDR_POWEROFF MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Save settings",              IDC_SAVE
+        MENUITEM "&Load settings",              IDC_LOAD_SETTINGS
+        MENUITEM "&Remove settings",            IDC_REMOVE_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "&Exit",                       IDC_CANCEL
+    END
+    POPUP "&Service"
+    BEGIN
+        MENUITEM "&Create service",             ID_CREATESERVICE
+        MENUITEM "&Remove service",             IDC_REMOVE_SERVICE
+        MENUITEM SEPARATOR
+        MENUITEM "&Save settings to service",   ID_SAVESETTINGSTOSERVICE
+        MENUITEM "&Load settings from service", ID_LOADSETTINGSFROMSERVICE
+    END
+END
+
+#endif    // Dutch (Belgium) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
