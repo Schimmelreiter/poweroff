@@ -31,6 +31,10 @@ in the history and in [CHANGES.md](CHANGES.md).
   IPv6 and IPv4. Where that is not possible (Windows XP, IPv6 switched off) the original
   IPv4-only code runs unchanged. Remote controlling another machine resolves names to IPv6
   and IPv4 addresses and tries them in turn. Wake-on-LAN stays IPv4.
+- **Service installation on 64-bit Windows.** "Install service" / `-create_service` copies
+  poweroff.exe to the real `system32`, where the service manager starts it. The original copy
+  was silently redirected to `SysWOW64`, so the service kept starting an older copy (or failed
+  to start).
 - **Build with current tools**: CMake for MSVC (Visual Studio 2022) and MinGW, GitHub Actions.
   The program stays 32-bit like the original (it runs on 64-bit Windows; the original code is
   not 64-bit clean).

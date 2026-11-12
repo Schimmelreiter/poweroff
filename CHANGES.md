@@ -10,6 +10,11 @@
   - src/poweroff.h: `winsock2.h` and `ws2tcpip.h` before `windows.h`, `_WIN32_WINNT 0x0501`
     (getaddrinfo, Windows XP and newer).
   - src/poweroff.dsp: `ws2_32.lib` instead of `wsock32.lib` (release build).
+- Service installation on 64-bit Windows: `CopyPoweroffToSystem` (src/service.c) switches the
+  WOW64 file system redirection off for the copy (`Wow64DisableWow64FsRedirection`, looked up
+  with `GetProcAddress`, so older Windows versions behave as before). Before, the copy of the
+  32-bit program to `system32` landed in `SysWOW64`, while the service manager starts
+  `system32\poweroff.exe` - an older copy kept running, or the service did not start at all.
 - Build:
   - `CMakeLists.txt` for MSVC and MinGW, toolchain files and an `afxres.h` stand-in in
     `build-support/` (no MFC needed), GitHub Actions workflow.
