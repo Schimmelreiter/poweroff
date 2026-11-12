@@ -43,7 +43,7 @@ int get_broadcast_addr(char *broadcast,char *subnet,char *mask)
 
 int WakeOnLan(PowerSettings *ps,char *ip_address,char *mask,char *mac_address)
 {
-  int sd; /* Socket descriptor */
+  SOCKET sd; /* Socket descriptor */
   unsigned char dest_mac_address[10];
   unsigned char sync[10] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
   unsigned char buf[REPEAT_ADDRESS*MAC_ADDRESS_LENGTH+HEADER_LENGTH];
@@ -75,7 +75,7 @@ int WakeOnLan(PowerSettings *ps,char *ip_address,char *mask,char *mac_address)
   hostaddr.sin_port = htons(7);
     
   /* Open an UDP socket */
-  if ((sd = socket(AF_INET, SOCK_DGRAM, 0)) == -1)
+  if ((sd = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
   {
     ShowSocketError(ps,"socket");
     return -5;

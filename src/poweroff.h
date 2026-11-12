@@ -16,7 +16,7 @@
 #include <stdarg.h>
 #include "resource.h"
 
-#define POWEROFF_VERSION "3.0.2.0"
+#define POWEROFF_VERSION "3.1.0.0"
 
 #define NMESSAGE 1234
 #define SHUTDOWN_TIMER 0

@@ -36,7 +36,7 @@ void BrowseSoundFile(HWND hWnd)
 }
 
 
-BOOL FAR PASCAL MessageProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK MessageProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 

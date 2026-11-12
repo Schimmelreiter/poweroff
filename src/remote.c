@@ -99,7 +99,7 @@ void EnableRemoteFields(HWND hWnd)
   Log("EnableRemoteFields end");
 }
 
-BOOL FAR PASCAL RemoteProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK RemoteProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 
@@ -220,7 +220,7 @@ int IsValidIPAddress(char *str)
   return 1;
 }
 
-BOOL FAR PASCAL WOLProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK WOLProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 

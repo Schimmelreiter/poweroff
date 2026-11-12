@@ -61,7 +61,7 @@ void BrowseProgram(HWND hWnd)
 }
 
 
-BOOL FAR PASCAL ProgramProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK ProgramProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 

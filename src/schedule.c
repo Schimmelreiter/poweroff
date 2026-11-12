@@ -181,7 +181,7 @@ void ShowCurrentTime(HWND hWnd)
   Log("ShowCurrentTime end, time=%s",str);
 }
 
-BOOL FAR PASCAL ScheduleProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK ScheduleProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 

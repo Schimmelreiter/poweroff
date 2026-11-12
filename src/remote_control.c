@@ -22,7 +22,7 @@ char *EncodePassword(char *password)
   return str;
 }
 
-BOOL FAR PASCAL RemoteControlProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK RemoteControlProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 

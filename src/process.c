@@ -31,7 +31,7 @@ BOOL CALLBACK FillProcBrowser(DWORD dw,WORD w16,LPCSTR lpstr,LPARAM lParam)
   return TRUE;
 }
 
-BOOL FAR PASCAL ProcessBrowserProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK ProcessBrowserProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 
@@ -78,7 +78,7 @@ BOOL FAR PASCAL ProcessBrowserProc(HWND hWnd, unsigned message,DWORD wParam, LON
 }
 
 
-BOOL FAR PASCAL ProcessProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK ProcessProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 

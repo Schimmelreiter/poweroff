@@ -3,9 +3,9 @@
 SERVICE_STATUS_HANDLE sh;
 SERVICE_STATUS status;
 
-/* 64-bit Windows file system redirection, looked up at run time */
-typedef BOOL (WINAPI *WOW64DISABLEREDIRECTION)(PVOID *);
-typedef BOOL (WINAPI *WOW64REVERTREDIRECTION)(PVOID);
+#ifndef _WIN64
+typedef UINT (WINAPI *GETSYSTEMWOW64DIRECTORY)(LPSTR,UINT);
+#endif
 
 int CopyPoweroffToSystem(HWND hWnd,PowerSettings *ps,char *system_poweroff)
 {
@@ -77,6 +77,18 @@ int CopyPoweroffToSystem(HWND hWnd,PowerSettings *ps,char *system_poweroff)
   }
   CloseHandle(f);
   
+#ifndef _WIN64
+  /* 32-bit program on 64-bit Windows: system32 is redirected to SysWOW64, which
+     is where the copy lands and where the service must be started from (the
+     64-bit service manager is not redirected). Older Windows: no such function. */
+  {
+    GETSYSTEMWOW64DIRECTORY get_wow64_dir=(GETSYSTEMWOW64DIRECTORY)GetProcAddress(GetModuleHandle("kernel32.dll"),"GetSystemWow64DirectoryA");
+
+    if (get_wow64_dir==NULL || get_wow64_dir(system_dir,MAX_PATH)==0)
+      system_dir[0]='\0';
+  }
+  if (system_dir[0]=='\0')
+#endif
   if (GetSystemDirectory(system_dir,MAX_PATH)==0)
   {
     DisplayLastError(ps,hWnd);
@@ -86,25 +98,8 @@ int CopyPoweroffToSystem(HWND hWnd,PowerSettings *ps,char *system_poweroff)
 
   if (_stricmp(original_poweroff,system_poweroff))
   {
-    /* 64-bit Windows: the copy of this 32-bit program would be redirected to
-       SysWOW64, but the service manager starts system32\poweroff.exe.
-       Copy to the real system32 (the functions do not exist before XP x64). */
-    WOW64DISABLEREDIRECTION disable_redirection=(WOW64DISABLEREDIRECTION)GetProcAddress(GetModuleHandle("kernel32.dll"),"Wow64DisableWow64FsRedirection");
-    WOW64REVERTREDIRECTION revert_redirection=(WOW64REVERTREDIRECTION)GetProcAddress(GetModuleHandle("kernel32.dll"),"Wow64RevertWow64FsRedirection");
-    PVOID redirection=NULL;
-    BOOL redirection_disabled=FALSE;
-    BOOL copied;
-    DWORD copy_error;
-
-    if (disable_redirection && revert_redirection)
-      redirection_disabled=disable_redirection(&redirection);
-    Log("Copying %s to %s (redirection disabled=%d)",original_poweroff,system_poweroff,(int)redirection_disabled);
-    copied=CopyFile(original_poweroff,system_poweroff,FALSE);
-    copy_error=GetLastError();
-    if (redirection_disabled)
-      revert_redirection(redirection);
-    SetLastError(copy_error);
-    if (copied==0)
+    Log("Copying %s to %s",original_poweroff,system_poweroff);
+    if (CopyFile(original_poweroff,system_poweroff,FALSE)==0)
     {
       DisplayLastError(ps,hWnd);
       CloseHandle(f);

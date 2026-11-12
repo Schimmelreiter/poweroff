@@ -144,8 +144,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 3,0,1,3
- PRODUCTVERSION 3,0,1,3
+ FILEVERSION 3,1,0,0
+ PRODUCTVERSION 3,1,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -163,14 +163,14 @@ BEGIN
             VALUE "Comments", "jorgen.bosman@pandora.be\0"
             VALUE "CompanyName", "Jorgen Bosman\0"
             VALUE "FileDescription", "poweroff\0"
-            VALUE "FileVersion", "3, 0, 1, 3\0"
+            VALUE "FileVersion", "3, 1, 0, 0\0"
             VALUE "InternalName", "poweroff\0"
             VALUE "LegalCopyright", "Created in 1999-2002\0"
             VALUE "LegalTrademarks", "This is freeware!\0"
             VALUE "OriginalFilename", "poweroff.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "Poweroff\0"
-            VALUE "ProductVersion", "3, 0, 1, 3\0"
+            VALUE "ProductVersion", "3, 1, 0, 0\0"
             VALUE "SpecialBuild", "\0"
         END
     END

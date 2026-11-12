@@ -1,5 +1,21 @@
 # Changes
 
+## 3.1.0.0 (this repository)
+
+- 64-bit build: the ten dialog procedures are declared `INT_PTR CALLBACK Proc(HWND, UINT,
+  WPARAM, LPARAM)` instead of `BOOL FAR PASCAL Proc(HWND, unsigned, DWORD, LONG)` (the
+  `LONG lParam` cut the settings pointer in half on 64-bit Windows); src/wol.c keeps the
+  socket in a `SOCKET` instead of an `int`.
+- Service installation: the 3.0.2.0 change (switching the WOW64 redirection off and copying to
+  the real `system32`) is replaced. `CopyPoweroffToSystem` (src/service.c) of the 32-bit build
+  now uses `GetSystemWow64Directory` (looked up with `GetProcAddress`) for the copy and the
+  service path: on 64-bit Windows `SysWOW64\poweroff.exe`, the right place for a 32-bit
+  program; on 32-bit and older Windows `GetSystemDirectory` as in the original. The 64-bit
+  build uses `GetSystemDirectory` (the real `system32`).
+- Build: MSVC Win32 and x64, MinGW i686 and x86_64; the release has `poweroff32.exe` and
+  `poweroff64.exe`.
+- Version 3.1.0.0 (greeting and version resource).
+
 ## 3.0.2.0 (this repository)
 
 - IPv6 for the remote control:

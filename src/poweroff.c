@@ -435,7 +435,7 @@ void DisplaySettings(HWND hWnd,PowerSettings *ps)
   Log("DisplaySettings end");
 }
  
-BOOL FAR PASCAL DlgProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK DlgProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static PowerSettings *ps;
 

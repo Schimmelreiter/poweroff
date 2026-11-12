@@ -1,6 +1,6 @@
 #include "poweroff.h"
 
-BOOL FAR PASCAL WarningProc(HWND hWnd, unsigned message,DWORD wParam, LONG lParam)
+INT_PTR CALLBACK WarningProc(HWND hWnd, UINT message,WPARAM wParam, LPARAM lParam)
 {
   static int time_left;
   static PowerSettings *ps;
