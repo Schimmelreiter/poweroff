@@ -1,9 +1,11 @@
-#define _WIN32_WINNT 0x0500
+#define _WIN32_WINNT 0x0501 /* getaddrinfo (Windows XP and newer) */
 #define ISOLATION_AWARE_ENABLED 1
 #define SIDEBYSIDE_COMMONCONTROLS 1 
 
 
 
+#include <winsock2.h> /* before windows.h; IPv6 */
+#include <ws2tcpip.h>
 #include <windows.h>
 #include <commctrl.h>
 #include <shlobj.h>
@@ -12,7 +14,7 @@
 #include <stdarg.h>
 #include "resource.h"
 
-#define POWEROFF_VERSION "3.0.1.3"
+#define POWEROFF_VERSION "3.0.2.0"
 
 #define NMESSAGE 1234
 #define SHUTDOWN_TIMER 0

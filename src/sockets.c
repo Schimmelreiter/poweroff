@@ -278,10 +278,32 @@ void DestroySockets(HWND hWnd,PowerSettings *ps)
 int CreateServerSocket(HWND hWnd,PowerSettings *ps)
 {
   struct sockaddr_in sa;
+  struct sockaddr_in6 sa6; /* IPv6 (3.0.2) */
+  DWORD v6only=0;
 
   Log("CreateServerSocket start");
   if (ps->serversocket!=INVALID_SOCKET)
     CloseServerSocket(hWnd,ps);
+
+  /* IPv6 (3.0.2): one dual-stack socket answers IPv6 and IPv4 (as ::ffff:a.b.c.d).
+     Without dual stack (Windows XP, IPv6 disabled) the original IPv4 code below runs. */
+  ps->serversocket=socket(AF_INET6,SOCK_STREAM,IPPROTO_TCP);
+  if (ps->serversocket!=INVALID_SOCKET)
+  {
+    memset(&sa6,0,sizeof(sa6));
+    sa6.sin6_family = AF_INET6;
+    sa6.sin6_port = htons((unsigned short)ps->remote_control.port);
+    sa6.sin6_addr = in6addr_any;
+    if (setsockopt(ps->serversocket,IPPROTO_IPV6,IPV6_V6ONLY,(char*)&v6only,sizeof(v6only))==SOCKET_ERROR ||
+        bind(ps->serversocket,(struct sockaddr*)&sa6,sizeof(sa6))==SOCKET_ERROR)
+    {
+      Log("No dual-stack socket (error %d), using IPv4 only",WSAGetLastError());
+      closesocket(ps->serversocket);
+      ps->serversocket=INVALID_SOCKET;
+    }
+  }
+  if (ps->serversocket==INVALID_SOCKET)
+  { /* original IPv4 code, unchanged */
   ps->serversocket=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
   if (ps->serversocket==INVALID_SOCKET)
   {
@@ -297,6 +319,7 @@ int CreateServerSocket(HWND hWnd,PowerSettings *ps)
     ShowSocketError(ps,"bind");
     return -1;
   }
+  } /* end of original IPv4 code */
   if (listen(ps->serversocket,LISTEN_CLIENTS)==SOCKET_ERROR)
   {
     ShowSocketError(ps,"listen");
@@ -414,58 +437,45 @@ int CloseServerSocket(HWND hWnd,PowerSettings *ps)
 
 int OpenServerConnection(HWND hWnd,PowerSettings *ps,char *server,char *errormsg)
 {
-  struct sockaddr_in sa;
-  struct hostent *hp; 
-  unsigned long ia;
+  struct addrinfo hints,*res=NULL,*ai;
+  char port[16];
   char str[500],*value;
-  int ret;
+  int ret,err=0;
 
   Log("OpenServerConnection start, server=%s",server);
   if (ps->clientsocket!=INVALID_SOCKET)
     CloseClientSocket(hWnd,ps);
-  ps->clientsocket=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+
+  /* IPv6 (3.0.2): resolve names and addresses of both families, try each address in turn */
+  memset(&hints,0,sizeof(hints));
+  hints.ai_family=AF_UNSPEC;
+  hints.ai_socktype=SOCK_STREAM;
+  hints.ai_protocol=IPPROTO_TCP;
+  sprintf(port,"%d",ps->remote.port);
+  if ((err=getaddrinfo(server,port,&hints,&res))!=0 || res==NULL)
+  {
+    WSASetLastError(err);
+    ShowSocketError(ps,"getaddrinfo");
+    return -1;
+  }
+  for (ai=res;ai!=NULL;ai=ai->ai_next)
+  {
+    ps->clientsocket=socket(ai->ai_family,ai->ai_socktype,ai->ai_protocol);
+    if (ps->clientsocket==INVALID_SOCKET)
+    {
+      err=WSAGetLastError();
+      continue;
+    }
+    if (connect(ps->clientsocket,ai->ai_addr,(int)ai->ai_addrlen)!=SOCKET_ERROR)
+      break;
+    err=WSAGetLastError();
+    closesocket(ps->clientsocket);
+    ps->clientsocket=INVALID_SOCKET;
+  }
+  freeaddrinfo(res);
   if (ps->clientsocket==INVALID_SOCKET)
   {
-    ShowSocketError(ps,"socket");
-    return -1;
-  }
-
-  sa.sin_family = AF_INET;
-  sa.sin_port = 0;
-  sa.sin_addr.s_addr = htonl(INADDR_ANY);   
-  if (bind(ps->clientsocket,(struct sockaddr*)&sa,sizeof(sa))==SOCKET_ERROR)
-  {
-    ShowSocketError(ps,"bind");
-    return -1;
-  }
-
-  if ((ia=inet_addr(server))==INADDR_NONE)
-  {
-    hp=gethostbyname(server);
-    if (hp == NULL)
-    {
-      ShowSocketError(ps,"gethostbyname");
-      return -1;
-    }
-    memset(&sa,0,sizeof(sa));
-    memcpy(&sa.sin_addr,hp->h_addr,hp->h_length);
-    sa.sin_family=hp->h_addrtype;
-  }
-  else
-  {
-/*    hp=gethostbyaddr((char*)&ia,sizeof(ia),AF_INET);
-    if (hp == NULL)
-    {
-      ShowSocketError(ps,"gethostbyaddr");
-      return -1;
-    }*/
-    memset(&sa,0,sizeof(sa));
-    memcpy(&sa.sin_addr,&ia,sizeof(ia));
-    sa.sin_family=AF_INET;
-  }
-  sa.sin_port=htons((unsigned short)ps->remote.port);
-  if (connect(ps->clientsocket,(struct sockaddr*)&sa,sizeof(sa))==SOCKET_ERROR)
-  {
+    WSASetLastError(err);
     ShowSocketError(ps,"connect");
     return -1;
   }
