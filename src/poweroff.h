@@ -1,5 +1,7 @@
 #define _WIN32_WINNT 0x0501 /* getaddrinfo (Windows XP and newer) */
+#ifndef ISOLATION_AWARE_ENABLED /* CMake sets 0: the manifest (resource 24) already activates the common controls */
 #define ISOLATION_AWARE_ENABLED 1
+#endif
 #define SIDEBYSIDE_COMMONCONTROLS 1 
 
 

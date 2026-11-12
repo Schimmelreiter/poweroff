@@ -13,8 +13,10 @@
 - Build:
   - `CMakeLists.txt` for MSVC and MinGW, toolchain files and an `afxres.h` stand-in in
     `build-support/` (no MFC needed), GitHub Actions workflow.
-  - src/poweroff.h: `#define ISOLATION_AWARE_ENABLED 1` (the empty define of the original
-    breaks current Windows SDK headers).
+  - src/poweroff.h: `ISOLATION_AWARE_ENABLED` is 1 unless the build defines it (the empty define
+    of the original breaks current SDK headers); CMake builds with 0 because the isolation-aware
+    inline headers of current Windows SDKs do not compile as C - the program activates common
+    controls 6 through its manifest anyway.
 - Version string `3.0.2.0` (shown in the remote control greeting).
 
 ## 3.0.1.3 and earlier
